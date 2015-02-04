@@ -2,18 +2,22 @@ var app = angular.module('quoteBook');
 
 app.factory('dataService', function ($cookieStore) {
 
-	var _quotes;
+	var myQuotes;
 
 	var cookieData = $cookieStore.get('myQuotes');
 
 	var save = function () {
-		$cookieStore.put('myQuotes', _quotes);
+		console.log('saving...');
+		$cookieStore.put('myQuotes', myQuotes);
+		console.log('saved:');
+		console.log($cookieStore.get('myQuotes'));
 	};
 
+	console.log(cookieData);
 	if (cookieData) {
-		var _quotes = cookieData;
+		var myQuotes = cookieData;
 	} else {
-		var _quotes = [
+		var myQuotes = [
 	    	{ text: 'Life isn\'t about getting and having, it\'s about giving and being.', author: 'Kevin Kruse'},
 		    { text: 'Whatever the mind of man can conceive and believe, it can achieve', author: 'Napoleon Hill'},
 		    { text: 'Strive not to be a success, but rather to be of value.', author: 'Albert Einstein'},
@@ -22,24 +26,24 @@ app.factory('dataService', function ($cookieStore) {
 		    { text: 'Life is what happens to you while you\'re busy making other plans.', author: 'John Lennon'},
 		    { text: 'What even is a jQuery?', author: 'Tyler S. McGinnis'}
 	  	];
-	  	save();
+	  	save()
   	}
 
   	var _getData = function () {
-  		return _quotes;
+  		return myQuotes;
   	};
 
   	var _addData = function (obj) {
   		if (obj.hasOwnProperty('text') && obj.hasOwnProperty('author')) {
-  			_quotes.push(obj);
+  			myQuotes.push(obj);
   		}
   		save();
   	};
 
   	var _removeData = function (text) {
-  		for (var i = 0; i < _quotes.length; i++) {
-  			if (_quotes[i].text === text) {
-  				_quotes.splice(i, 1);
+  		for (var i = 0; i < myQuotes.length; i++) {
+  			if (myQuotes[i].text === text) {
+  				myQuotes.splice(i, 1);
   				i--;
   			}
   		};
